@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'login_screen.dart';
+
 class ChatScreen extends StatefulWidget {
   static const String id = 'ChatScreen';
   @override
@@ -65,7 +67,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      _auth.signOut();
+                      Navigator.pushNamed(context, LoginScreen.id);
                     },
                     child: Text(
                       'Send',
