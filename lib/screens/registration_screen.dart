@@ -5,12 +5,14 @@ import '../constants.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'RegistrationScreen';
-
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,8 +34,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               decoration:
                   kTextfieldDecoration.copyWith(hintText: 'Enter yout email'),
@@ -42,8 +46,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextfieldDecoration.copyWith(
                   hintText: 'Enter your Password'),
@@ -52,11 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 24.0,
             ),
             RoundedButton(
-                title: 'Register',
-                colour: Colors.blueAccent,
-                onPressed: () {
-                  //Navigator.pushNamed(context, RegistrationScreen.id);
-                }),
+                title: 'Register', colour: Colors.blueAccent, onPressed: () {}),
           ],
         ),
       ),
