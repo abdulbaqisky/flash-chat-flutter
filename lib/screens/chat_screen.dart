@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login_screen.dart';
 
@@ -11,8 +12,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _firestore = Firestore.instance;
   final _auth = FirebaseAuth.instance;
-  FirebaseUser loggedInUser;
+  User loggedInUser;
+  String messageText;
 
   @override
   void initState() {
@@ -20,7 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
     getCurrentUser();
   }
 
-  void getCurrentUser() async {
+  void getCurrentUser() {
     try {
       final user = _auth.currentUser;
       if (user != null) {
@@ -41,7 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                //Implement logout functionality
+                _auth.signOut();
+                Navigator.pushNamed(context, LoginScreen.id);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -60,15 +64,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        messageText = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      _auth.signOut();
-                      Navigator.pushNamed(context, LoginScreen.id);
+                      _firestore.collection('messages').add({
+                        'text': messageText,
+                        'sender': loggedInUser.email,
+                      });
                     },
                     child: Text(
                       'Send',
