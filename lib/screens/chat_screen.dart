@@ -63,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () {
                 messageStream();
                 _auth.signOut();
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -144,7 +144,9 @@ class MyMessagesStream extends StatelessWidget {
         }
         return Expanded(
           child: ListView(
+            reverse: true,
             children: messageBubbles,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           ),
         );
         //return null;
