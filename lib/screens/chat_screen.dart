@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'login_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
@@ -43,14 +42,14 @@ class _ChatScreenState extends State<ChatScreen> {
     for (var message in messages.docs) {
       print(message.data());
     }
-  }*/
+  }*/ /*
   void messageStream() async {
     await for (var snapshot in _firestore.collection('messages').snapshots()) {
       for (var message in snapshot.docs) {
         print(message.data);
       }
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,6 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                messageStream();
                 _auth.signOut();
                 Navigator.pop(context);
               }),
@@ -127,7 +125,7 @@ class MyMessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data.docs.reversed;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages) {
           final messageText = message.data()['text'];
